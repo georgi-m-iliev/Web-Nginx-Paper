@@ -169,7 +169,7 @@ tbody tr:hover {
 }
 
 .image-float-container {
-    float: right; /* или left */
+    float: right;
     margin: 0 0 10px 20px;
     max-width: 300px;
 }
@@ -180,7 +180,6 @@ tbody tr:hover {
     border-radius: 8px;
 }
 
-/* Когато искаш да приключиш обтичането */
 .clearfix {
     clear: both;
 }
