@@ -167,3 +167,20 @@ tbody td {
 tbody tr:hover {
     background-color: #e2f0de;
 }
+
+.image-float-container {
+    float: right; /* или left */
+    margin: 0 0 10px 20px;
+    max-width: 300px;
+}
+
+.image-float-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Когато искаш да приключиш обтичането */
+.clearfix {
+    clear: both;
+}
