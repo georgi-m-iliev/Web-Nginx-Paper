@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/terminal.css">
     <link rel="stylesheet" href="css/code-editor.css">
+    <script type="module" src="javascript/contentLoader.js"></script>
+    <script type="module" src="javascript/codeEditorBlock.js"></script>
+    <script type="module" src="javascript/dynamicTerminalBlock.js"></script>
 </head>
 <body>
     <div class="container">
@@ -83,7 +86,11 @@
         
 </div>
 
-<script>
+<script type="module">
+    import { fetchSections } from '/javascript/contentLoader.js';
+    import { handleCodeEditorBlockCopyButtons } from '/javascript/codeEditorBlock.js';
+    import { handleDynamicTerminalBlocks } from '/javascript/dynamicTerminalBlock.js';
+
 document.addEventListener("DOMContentLoaded", () => {
     const sections = [
         { id: "content-introduction", file: "content/introduction.html" },
@@ -94,87 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: "content-sources", file: "content/sources.html" }
     ];
 
-    let fetchPromises = sections.map(section => {
-        return fetch(section.file)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Грешка при зареждане на ${section.file}`);
-                }
-                return response.text();
-            })
-            .then(html => {
-                document.getElementById(section.id).innerHTML = html;
-            })
-            .catch(error => {
-                console.error(error);
-                document.getElementById(section.id).innerHTML = "<p>Грешка при зареждане на съдържанието.</p>";
-            });
-    });
-
-    Promise.all(fetchPromises).then(() => {
-        // ТУК вече сме сигурни, че цялото съдържание е заредено!
-
-        // Добавяме събития за копиране
-        document.querySelectorAll('.copy-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const codeBlock = this.closest('.code-editor').querySelector('code');
-                const rawCode = codeBlock.getAttribute('data-code') || codeBlock.innerText;
-                navigator.clipboard.writeText(rawCode).then(() => {
-                    this.innerText = "Копирано!";
-                    setTimeout(() => {
-                        this.innerText = "Копирай";
-                    }, 2000);
-                });
-            });
-        });
-
-        const terminalBlocks = document.querySelectorAll('.terminal');
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const block = entry.target;
-                if (block.dataset.typed !== "true") {
-                    typeTerminalCommand(block);
-                    block.dataset.typed = "true"; // за да не стартира втори път
-                }
-            }
-        });
-    }, {
-        threshold: 1.0 // трябва да е напълно видим
-    });
-
-    terminalBlocks.forEach(block => observer.observe(block));
-
-    function typeTerminalCommand(block) {
-        const command = block.getAttribute('data-command');
-        const prompt = block.getAttribute('data-prompt') || '$';
-        const content = block.querySelector('.terminal-content');
-        content.textContent = prompt + ' ';
-
-        let index = 0;
-
-        function typeNextChar() {
-            if (index < command.length) {
-                content.textContent = prompt + ' ' + command.substring(0, index + 1);
-                index++;
-                setTimeout(typeNextChar, 20); // бързо писане
-            }
-        }
-
-        typeNextChar();
-
-        const copyBtn = block.querySelector('.copy-button-terminal');
-        copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(command).then(() => {
-                copyBtn.innerText = "Копирано!";
-                setTimeout(() => {
-                    copyBtn.innerText = "Копирай";
-                }, 2000);
-            });
-        });
-    }
-
+    // Тъй като fetchSections е асинхронна функция, която чете от файлове, е нужно да изчакаме 
+    // нейното приключване, за да продължим с обработката на DOM.
+    fetchSections(sections).then(() => {
+        handleCodeEditorBlockCopyButtons();
+        handleDynamicTerminalBlocks();
     });
 });
 </script>
