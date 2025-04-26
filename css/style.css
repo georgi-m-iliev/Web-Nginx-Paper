@@ -1,0 +1,169 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e8f5e9;
+    color: #212121;
+}
+
+.container {
+    max-width: 60%;
+    margin: 0 auto;
+    padding: 20px 3em;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
+}
+
+header, nav, main, footer, article, section, aside {
+    margin-bottom: 20px;
+}
+
+header {
+    padding-bottom: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #4d9346;
+}
+
+@media (max-width: 1456px) {
+    .header {
+      flex-direction: column;
+    }
+  }
+
+.header-left {
+    flex: 3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.header-right {
+    flex: 1;
+    text-align: right;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 5px 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #4d9346;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main article header h2 {
+    margin-bottom: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+main article header h2::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #4d9346;
+    margin-top: 5px;
+}
+
+main img, section img, article img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+}
+
+figure {
+    text-align: center;
+}
+
+figcaption {
+    font-style: italic;
+    color: #555;
+}
+
+summary {
+    font-weight: bold;
+    cursor: pointer;
+    color: #4d9346;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #cccccc;
+    margin: 20px 0;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+    border-top: 1px solid #4d9346;
+    padding-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 20px 0;
+    font-size: 1em;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+thead {
+    background-color: #4d9346;
+    color: #ffffff;
+}
+
+thead th {
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody td {
+    padding: 8px 10px;
+    text-align: left;
+}
+
+tbody tr:hover {
+    background-color: #e2f0de;
+}

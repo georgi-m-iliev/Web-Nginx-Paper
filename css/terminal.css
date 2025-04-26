@@ -1,0 +1,63 @@
+.terminal {
+    background-color: #2e2e2e;
+    border: 1px solid #4d9346;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95em;
+    
+    display: inline-block;
+    min-width: 300px;
+    max-width: 100%;
+    width: auto;
+    vertical-align: top;
+}
+
+.terminal-header {
+    background-color: #4d9346;
+    color: #ffffff;
+    padding: 8px 12px;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.terminal-content {
+    padding: 0 15px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: 'Courier New', Courier, monospace;
+    color: #d4d4d4;
+}
+
+.terminal-content::after {
+    content: '|';
+    animation: blink 1s step-start infinite;
+    color: #4d9346;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.copy-button-terminal {
+    background-color: #ffffff;
+    color: #4d9346;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+
+.copy-button-terminal:hover {
+    background-color: #4d9346;
+    color: white;
+}

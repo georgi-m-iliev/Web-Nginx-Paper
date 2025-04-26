@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nginx. Архитектура, инсталиране, конфигуриране, виртуални хостове.</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/terminal.css">
+    <link rel="stylesheet" href="css/code-editor.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-left">
+                <img src="img/nginx-logo.svg" alt="Nginx Logo" class="logo">
+                <h1>Nginx. Архитектура, инсталиране, <br>конфигуриране, виртуални хостове.</h1>  
+            </div>
+            <div class="header-right">
+                <!-- <p>Изготвил: Вашето име</p> -->
+                <p><time datetime="2025-04-27">27 април 2025 г.</time></p>
+            </div>
+        </header>
+
+        <nav>
+            <h2>Съдържание</h2>
+            <ul>
+                <li><a href="#introduction">Въведение</a></li>
+                <li><a href="#architecture">Архитектура</a></li>
+                <li><a href="#installation">Инсталиране</a></li>
+                <li><a href="#configuration">Конфигуриране</a></li>
+                <li><a href="#virtual-hosts">Виртуални хостове</a></li>
+                <li><a href="#sources">Използвани източници</a></li>
+            </ul>
+        </nav>
+
+        <main>          
+
+            <article id="introduction">
+                <header><h2>Въведение</h2></header>
+                <section id="content-introduction"></section>
+            </article>
+
+            <hr>
+
+            <article id="architecture">
+                <header><h2>Архитектура</h2></header>
+                <section id="content-architecture"></section>
+            </article>
+
+            <hr>
+
+            <article id="installation">
+                <header><h2>Инсталиране</h2></header>
+                <section id="content-installation"></section>
+            </article>
+
+            <hr>
+
+            <article id="configuration">
+                <header><h2>Конфигуриране</h2></header>
+                <section id="content-configuration"></section>
+            </article>
+
+            <hr>
+
+            <article id="virtual-hosts">
+                <header><h2>Виртуални хостове</h2></header>
+                <section id="content-virtual-hosts"></section>
+            </article>
+
+            <hr>
+
+            <article id="sources">
+                <header><h2>Използвани източници</h2></header>
+                <section id="content-sources"></section>
+            </article>
+
+        </main>
+
+        <footer>
+            <p>Всички права запазени &copy; <script>document.write(new Date().getFullYear());</script></p>
+        </footer>
+        
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const sections = [
+        { id: "content-introduction", file: "content/introduction.html" },
+        { id: "content-architecture", file: "content/architecture.html" },
+        { id: "content-installation", file: "content/installation.html" },
+        { id: "content-configuration", file: "content/configuration.html" },
+        { id: "content-virtual-hosts", file: "content/virtual-hosts.html" },
+        { id: "content-sources", file: "content/sources.html" }
+    ];
+
+    let fetchPromises = sections.map(section => {
+        return fetch(section.file)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Грешка при зареждане на ${section.file}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById(section.id).innerHTML = html;
+            })
+            .catch(error => {
+                console.error(error);
+                document.getElementById(section.id).innerHTML = "<p>Грешка при зареждане на съдържанието.</p>";
+            });
+    });
+
+    Promise.all(fetchPromises).then(() => {
+        // ТУК вече сме сигурни, че цялото съдържание е заредено!
+
+        // Добавяме събития за копиране
+        document.querySelectorAll('.copy-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const codeBlock = this.closest('.code-editor').querySelector('code');
+                const rawCode = codeBlock.getAttribute('data-code') || codeBlock.innerText;
+                navigator.clipboard.writeText(rawCode).then(() => {
+                    this.innerText = "Копирано!";
+                    setTimeout(() => {
+                        this.innerText = "Копирай";
+                    }, 2000);
+                });
+            });
+        });
+
+        const terminalBlocks = document.querySelectorAll('.terminal');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const block = entry.target;
+                if (block.dataset.typed !== "true") {
+                    typeTerminalCommand(block);
+                    block.dataset.typed = "true"; // за да не стартира втори път
+                }
+            }
+        });
+    }, {
+        threshold: 1.0 // трябва да е напълно видим
+    });
+
+    terminalBlocks.forEach(block => observer.observe(block));
+
+    function typeTerminalCommand(block) {
+        const command = block.getAttribute('data-command');
+        const prompt = block.getAttribute('data-prompt') || '$';
+        const content = block.querySelector('.terminal-content');
+        content.textContent = prompt + ' ';
+
+        let index = 0;
+
+        function typeNextChar() {
+            if (index < command.length) {
+                content.textContent = prompt + ' ' + command.substring(0, index + 1);
+                index++;
+                setTimeout(typeNextChar, 20); // бързо писане
+            }
+        }
+
+        typeNextChar();
+
+        const copyBtn = block.querySelector('.copy-button-terminal');
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(command).then(() => {
+                copyBtn.innerText = "Копирано!";
+                setTimeout(() => {
+                    copyBtn.innerText = "Копирай";
+                }, 2000);
+            });
+        });
+    }
+
+    });
+});
+</script>
+</body>
+</html>

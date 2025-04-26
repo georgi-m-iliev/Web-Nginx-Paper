@@ -1,0 +1,268 @@
+<p>Nginx може да бъде инсталиран на множество архитектури, изпълняващи различни операционни системи, включително Linux,
+    FreeBSD, Solaris, macOS, Windows и други. Основният фокус на разработката остава върху Unix-базираните системи,
+    където производителността и стабилността на Nginx са най-добри.</p>
+<h3>Под Windows</h3>
+<p>Версията на Nginx за Windows използва native Win32 API извиквания (не се използва Cygwin емулиращ слой за Unix под
+    Windows). Поради тези ограничения, висока производителност и мащабируемост не трябва да бъдат очаквани. Поради тази
+    и други причини, Windows версията се счита за бета версия. Към момента тази версия предоставя същите функционалности
+    като Unix версията с няколко изключения:</p>
+<ul>
+    <li>XSLT filter – за обработка на XML чрез XSLT трансформации;</li>
+    <li>Image filter – за динамична обработка на изображения;</li>
+    <li>GeoIP модул – за геолокация по IP адрес;</li>
+    <li>Вграден Perl интерпретатор – за изпълнение на Perl скриптове в сървъра;</li>
+    <li>Макар и да стартира множество работни процеси, само един от тях извършва реална работа по обработка на заявките;
+    </li>
+    <li>UDP (и следователно QUIC) функционалността не се поддържа.</li>
+</ul>
+<h3>Под Unix</h3>
+<p>Множество Linux дистрибуции предоставят пакети за Nginx директно в своите стандартни хранилища. Благодарение на
+    високата си популярност Linux потребителите имат възможност да инсталират продукта директно чрез пакетния мениджър
+    на дистрибуцията. Няколко примера за това:</p>
+<ul>
+    <li>
+        <div>Debian/Ubuntu</div> 
+        <div class="terminal" data-command="sudo apt install nginx" data-prompt="$">
+            <div class="terminal-header">
+                bash
+                <button class="copy-button-terminal">Копирай</button>
+            </div>
+            <pre class="terminal-content"></pre>
+        </div>
+    </li>
+    <li>
+        <div>CentOS/RHEL</div> 
+        <div class="terminal" data-command="sudo yum install nginx" data-prompt="$">
+            <div class="terminal-header">
+                bash
+                <button class="copy-button-terminal">Копирай</button>
+            </div>
+            <pre class="terminal-content"></pre>
+        </div>
+    </li>
+    <li>
+        <div>Arch Linux</div>
+        <div class="terminal" data-command="sudo pacman -S nginx" data-prompt="$">
+            <div class="terminal-header">
+                bash
+                <button class="copy-button-terminal">Копирай</button>
+            </div>
+            <pre class="terminal-content"></pre>
+        </div>
+    </li>
+</ul>
+<p>Nginx също така предоставя пакети чрез собствено хранилище за следните Linux дистрибуции (към май 2025 г.):</p>
+<table>
+    <tbody>
+        <tr>
+            <td width="245">
+                <p>Дистрибуция</p>
+            </td>
+            <td width="170">
+                <p>Поддържана версия</p>
+            </td>
+            <td width="186">
+                <p>Архитектури</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">
+                <p>Red Hat Enterprise Linux (RHEL)*</p>
+            </td>
+            <td width="170">
+                <p>8.x</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>9.x</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">
+                <p>Debian</p>
+            </td>
+            <td width="170">
+                <p>11.x &ldquo;bullseye&rdquo;</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>12.x &ldquo;bookworm&rdquo;</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">
+                <p>Ubuntu</p>
+            </td>
+            <td width="170">
+                <p>20.04 &ldquo;focal&rdquo;</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>22.04 &ldquo;jammy&rdquo;</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>24.04 &ldquo;noble&rdquo;</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>24.10 &ldquo;oracular&rdquo;</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">
+                <p>Suse Linux Enterprise (SLES)</p>
+            </td>
+            <td width="170">
+                <p>15 SP6+</p>
+            </td>
+            <td width="186">
+                <p>x86_64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">
+                <p>Alpine</p>
+            </td>
+            <td width="170">
+                <p>3.18</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>3.19</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>3.20</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>3.21</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">
+                <p>Amazon Linux</p>
+            </td>
+            <td width="170">
+                <p>2 (LTS)</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="245">&nbsp;</td>
+            <td width="170">
+                <p>2023</p>
+            </td>
+            <td width="186">
+                <p>x86_64, aarch64/arm64</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>* и производни дистрибуции</p>
+<p>Преди инсталиране на уеб сървъра, трябва да подготвите системата, като добавите хранилището. Стъпките по инсталация са следните (за Debian/Ubuntu дистрибуции, подобни за останалите дистрибуции):</p>
+<ol>
+    <li>
+        <div>Инсталиране на предварителните изисквания</div>
+        <div class="terminal" data-command="sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring" data-prompt="$">
+            <div class="terminal-header">
+                bash
+                <button class="copy-button-terminal">Копирай</button>
+            </div>
+            <pre class="terminal-content"></pre>
+        </div>
+    </li>
+
+    <li>
+        <div>Импортиране официалния ключ за подписване на Nginx</div>
+        <div class="terminal" data-command="curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+        | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null" data-prompt="$">
+            <div class="terminal-header">
+                bash
+                <button class="copy-button-terminal">Копирай</button>
+            </div>
+            <pre class="terminal-content"></pre>
+        </div>
+    </li>
+    <li>
+        <div>Добавяне на хранилището</div>
+        <div class="terminal" data-command="echo &quot;deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
+        http://nginx.org/packages/ubuntu `lsb_release -cs` nginx&quot; \
+            | sudo tee /etc/apt/sources.list.d/nginx.list" data-prompt="$">
+            <div class="terminal-header">
+                bash
+                <button class="copy-button-terminal">Копирай</button>
+            </div>
+            <pre class="terminal-content"></pre>
+        </div>
+    </li>
+    <li>
+        <div>Инсталиране на пакета</div>
+        <div class="terminal" data-command="sudo apt update && sudo apt install" data-prompt="$">
+            <div class="terminal-header">
+                bash
+                <button class="copy-button-terminal">Копирай</button>
+            </div>
+            <pre class="terminal-content"></pre>
+        </div>
+    </li>
+</ol>
+<h3>Други</h3>
+<p>В случай, че има нужда от някои специални функционалности, които не са налични с готовите пакети и портове, Nginx
+    може да бъде компилиран от изходен код. Макар и по-гъвкав, този случай може да бъде сложен за начинаещи потребители.
+</p>

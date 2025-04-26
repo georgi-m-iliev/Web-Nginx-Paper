@@ -1,0 +1,59 @@
+<p>Виртуалните хостове са основен механизъм, чрез който Nginx може да обслужва няколко различни сайта или услуги от една
+    и съща инсталация на сървъра. Всеки виртуален хост е представен чрез отделен server блок в конфигурацията и може да
+    бъде конфигуриран да отговаря на различни домейни, IP адреси или портове.</p>
+<p>Основни принципи на виртуалните хостове са:</p>
+<ul>
+    <li>Всеки виртуален хост е дефиниран чрез собствен server блок в рамките на http контекста;</li>
+    <li>Възможно е да се настроят множество виртуални хостове в един и същи файл (nginx.conf) или чрез отделни файлове в
+        директорията /etc/nginx/sites-available/, които се активират чрез символични връзки в /etc/nginx/sites-enabled/;
+    </li>
+    <li>Разделянето на сайтовете в отделни конфигурационни файлове улеснява управлението, обновяването и мащабирането на
+        услугите.</li>
+</ul>
+<p>Пример за базова конфигурация на виртуален хост:</p>
+<div class="code-editor">
+    <div class="editor-header">
+        /etc/nginx/sites-available/example.conf
+        <button class="copy-button">Копирай</button>
+    </div>
+    <pre><code>server {
+    listen 80;
+    server_name example.com www.example.com;
+
+    root /var/www/example.com/html;
+    index index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}</code></pre>
+</div>
+<p>Това което дефинираме в нея е следното:</p>
+<ul>
+    <li>Сървърът ще "слуша" на порт 80;</li>
+    <li>Ще отговаря на домейните com и www.example.com</li>
+    <li>Ще сервира съдържание от директорията /var/www/example.com/html;</li>
+    <li>Ако даден файл или директория не бъде намерен, ще върне код за грешка 404.</li>
+</ul>
+<p>Когато заявка не съвпада с нито един server_name, Nginx избира сървър, маркиран с default_server:</p>
+<div class="code-editor">
+    <div class="editor-header">
+        /etc/nginx/sites-available/default.conf
+        <button class="copy-button">Копирай</button>
+    </div>
+    <pre><code>server {
+    listen 80 default_server;
+    server_name _;
+
+    root /var/www/default;
+}</code></pre>
+</div>
+<p>Това е полезно за обработка на заявки към неочаквани или неправилно конфигурирани домейни.</p>
+<p>След промени в конфигурацията на Nginx е нужно да опресним услугата:</p>
+<div class="terminal" data-command="systemctl reload nginx" data-prompt="#">
+    <div class="terminal-header">
+        bash
+        <button class="copy-button-terminal">Копирай</button>
+    </div>
+    <pre class="terminal-content"></pre>
+</div>
